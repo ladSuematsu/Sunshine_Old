@@ -120,8 +120,6 @@ public class CurrentForecastFragment extends SwipeRefreshFragment {
         asyncRefresh(callback);
     }
 
-
-
     protected void asyncRefresh(final AsyncOperatorCallback callback){
         new AsyncTaskManager().getWeatherWebserviceRequest(callback);
     }

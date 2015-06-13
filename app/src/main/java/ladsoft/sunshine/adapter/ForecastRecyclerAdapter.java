@@ -63,7 +63,6 @@ public class ForecastRecyclerAdapter extends RecyclerView.Adapter<ForecastRecycl
     public int getItemCount() {
         Forecast[] forecasts = forecastResult.getList();
         return forecasts != null ? forecasts.length : 0;
-        //return 3;
     }
 
     public void setForecastResult(ForecastResult forecastResult) {

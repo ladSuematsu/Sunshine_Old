@@ -21,7 +21,7 @@ import ladsoft.sunshine.util.Constants;
 public class WebserviceManager {
 
 
-    public static String weatherForecast() throws JSONException {
+    public static String weatherForecast(URL url) throws JSONException {
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
@@ -32,7 +32,6 @@ public class WebserviceManager {
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are available at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
-            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
 
             // Create the request to OpenWeatherMap, and open the connection.
             urlConnection = (HttpURLConnection) url.openConnection();

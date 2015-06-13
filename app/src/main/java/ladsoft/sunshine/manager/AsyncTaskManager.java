@@ -1,11 +1,16 @@
 package ladsoft.sunshine.manager;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
 import org.json.JSONException;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import ladsoft.sunshine.entity.ForecastResult;
 import ladsoft.sunshine.listener.AsyncOperatorCallback;
@@ -28,6 +33,7 @@ public class AsyncTaskManager {
             protected ForecastResult doInBackground (Void...params){
                 Log.i(Constants.WS_TAG, "getWeatherWebserviceRequest doInBackground");
 
+                // Only for testing purposes
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -39,9 +45,27 @@ public class AsyncTaskManager {
                 String jsonForecastResult = null;
                 ForecastResult forecastResult = null;
                 try {
-                    jsonForecastResult = WebserviceManager.weatherForecast();
+                    //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+
+                    Uri.Builder uriBuilder = new Uri.Builder();
+                    uriBuilder.scheme("http")
+                        .authority("api.openweathermap.org")
+                        .appendPath("data")
+                        .appendPath("2.5")
+                        .appendPath("forecast")
+                        .appendPath("daily")
+                        .appendQueryParameter("q", "94043")
+                        .appendQueryParameter("mode", "json")
+                        .appendQueryParameter("units","metric")
+                        .appendQueryParameter("cnt", "7");
+                    URL url = new URL(uriBuilder.toString());
+
+                    jsonForecastResult = WebserviceManager.weatherForecast(url);
+
                     forecastResult = gson.fromJson(jsonForecastResult, ForecastResult.class);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
 
