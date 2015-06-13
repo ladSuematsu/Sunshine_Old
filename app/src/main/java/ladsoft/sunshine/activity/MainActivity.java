@@ -2,8 +2,8 @@ package ladsoft.sunshine.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentManager;
@@ -15,8 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 //    private ViewPager mViewPager;
     private Context mContext;
 
+    public static final String FORECAST_PREFERENCES = String.valueOf(R.string.forecast_preferences);
 
     private Toolbar mToolbar;
     private ActionBar mActionBar;
@@ -53,10 +52,21 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout mFrameLayout;
     private FragmentManager fragmentManager;
 
+    private SharedPreferences mForecastPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mForecastPreferences = this.getSharedPreferences(FORECAST_PREFERENCES, MODE_PRIVATE);
+
+        if(mForecastPreferences.getString("place", null) == null) {
+            mForecastPreferences.edit()
+                    .putString("place", "94043")
+                    .commit();
+        }
+
 
         init(savedInstanceState);
 
@@ -102,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item_3:
-                        Toast.makeText(getBaseContext(), "item 3", Toast.LENGTH_SHORT).show();
-
                         Intent intent = new Intent(mContext, AboutActivity.class);
                         startActivity(intent);
                     break;

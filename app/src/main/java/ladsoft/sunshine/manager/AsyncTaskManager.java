@@ -21,8 +21,9 @@ import ladsoft.sunshine.util.Constants;
  */
 public class AsyncTaskManager {
 
-    public void getWeatherWebserviceRequest(final AsyncOperatorCallback<ForecastResult> callback){
-        new AsyncTask<Void, Void, ForecastResult>(){
+    public void getWeatherWebserviceRequest(URL url, final AsyncOperatorCallback<ForecastResult> callback){
+        new AsyncTask<URL, Void, ForecastResult>(){
+
             @Override
             protected void onPreExecute () {
             super.onPreExecute();
@@ -30,7 +31,7 @@ public class AsyncTaskManager {
             }
 
             @Override
-            protected ForecastResult doInBackground (Void...params){
+            protected ForecastResult doInBackground (URL ...params){
                 Log.i(Constants.WS_TAG, "getWeatherWebserviceRequest doInBackground");
 
                 // Only for testing purposes
@@ -47,25 +48,10 @@ public class AsyncTaskManager {
                 try {
                     //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
 
-                    Uri.Builder uriBuilder = new Uri.Builder();
-                    uriBuilder.scheme("http")
-                        .authority("api.openweathermap.org")
-                        .appendPath("data")
-                        .appendPath("2.5")
-                        .appendPath("forecast")
-                        .appendPath("daily")
-                        .appendQueryParameter("q", "94043")
-                        .appendQueryParameter("mode", "json")
-                        .appendQueryParameter("units","metric")
-                        .appendQueryParameter("cnt", "7");
-                    URL url = new URL(uriBuilder.toString());
-
-                    jsonForecastResult = WebserviceManager.weatherForecast(url);
+                    jsonForecastResult = WebserviceManager.weatherForecast(params[0]);
 
                     forecastResult = gson.fromJson(jsonForecastResult, ForecastResult.class);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
 
@@ -79,6 +65,6 @@ public class AsyncTaskManager {
 
                 Log.i(Constants.WS_TAG, "getWeatherWebserviceRequest onPostExecute");
             }
-        }.execute();
+        }.execute(url);
     }
 }

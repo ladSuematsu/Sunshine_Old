@@ -2,6 +2,8 @@ package ladsoft.sunshine.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -11,10 +13,13 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ladsoft.sunshine.R;
+import ladsoft.sunshine.activity.MainActivity;
 import ladsoft.sunshine.entity.City;
 import ladsoft.sunshine.entity.Forecast;
 import ladsoft.sunshine.entity.ForecastResult;
@@ -31,6 +36,8 @@ public class CurrentForecastFragment extends SwipeRefreshFragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
+    private String mPlace;
+
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ListView mListView;
@@ -39,6 +46,10 @@ public class CurrentForecastFragment extends SwipeRefreshFragment {
 
     private View mContentView;
     private FrameLayout mFrameLayout;
+
+    private SharedPreferences mSharedPreferences;
+
+    private URL mURL;
 
     private final AsyncOperatorCallback<ForecastResult> callback = new AsyncOperatorCallback<ForecastResult>() {
         @Override
@@ -78,6 +89,26 @@ public class CurrentForecastFragment extends SwipeRefreshFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mSharedPreferences = mContext.getSharedPreferences(MainActivity.FORECAST_PREFERENCES, Context.MODE_PRIVATE);
+        mPlace = mSharedPreferences.getString("place", null);
+
+        Uri.Builder uriBuilder = new Uri.Builder();
+        uriBuilder.scheme("http")
+                .authority("api.openweathermap.org")
+                .appendPath("data")
+                .appendPath("2.5")
+                .appendPath("forecast")
+                .appendPath("daily")
+                .appendQueryParameter("q", mPlace)
+                .appendQueryParameter("mode", "json")
+                .appendQueryParameter("units","metric")
+                .appendQueryParameter("cnt", "7");
+        try {
+            mURL = new URL(uriBuilder.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
         setHasOptionsMenu(true);
     }
@@ -121,7 +152,7 @@ public class CurrentForecastFragment extends SwipeRefreshFragment {
     }
 
     protected void asyncRefresh(final AsyncOperatorCallback callback){
-        new AsyncTaskManager().getWeatherWebserviceRequest(callback);
+        new AsyncTaskManager().getWeatherWebserviceRequest(mURL, callback);
     }
 
     protected void setViews(ForecastResult forecastResult){
