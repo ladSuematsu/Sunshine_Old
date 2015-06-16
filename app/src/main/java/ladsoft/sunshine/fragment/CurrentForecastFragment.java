@@ -20,6 +20,7 @@ import java.util.Date;
 
 import ladsoft.sunshine.R;
 import ladsoft.sunshine.activity.MainActivity;
+import ladsoft.sunshine.activity.SettingsActivity;
 import ladsoft.sunshine.entity.City;
 import ladsoft.sunshine.entity.Forecast;
 import ladsoft.sunshine.entity.ForecastResult;
@@ -90,8 +91,8 @@ public class CurrentForecastFragment extends SwipeRefreshFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSharedPreferences = mContext.getSharedPreferences(MainActivity.FORECAST_PREFERENCES, Context.MODE_PRIVATE);
-        mPlace = mSharedPreferences.getString("place", null);
+        mSharedPreferences = mContext.getSharedPreferences(SettingsActivity.FORECAST_SETTINGS, Context.MODE_PRIVATE);
+        mPlace = mSharedPreferences.getString(SettingsActivity.FORECAST_PLACE_SETTING, null);
 
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("http")

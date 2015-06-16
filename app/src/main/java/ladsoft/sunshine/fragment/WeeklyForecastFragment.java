@@ -19,6 +19,7 @@ import java.net.URL;
 
 import ladsoft.sunshine.R;
 import ladsoft.sunshine.activity.MainActivity;
+import ladsoft.sunshine.activity.SettingsActivity;
 import ladsoft.sunshine.adapter.ForecastRecyclerAdapter;
 import ladsoft.sunshine.entity.ForecastResult;
 import ladsoft.sunshine.listener.AsyncOperatorCallback;
@@ -97,8 +98,8 @@ public class WeeklyForecastFragment extends SwipeRefreshFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSharedPreferences = mContext.getSharedPreferences(MainActivity.FORECAST_PREFERENCES, Context.MODE_PRIVATE);
-        mPlace = mSharedPreferences.getString("place", null);
+        mSharedPreferences = mContext.getSharedPreferences(SettingsActivity.FORECAST_SETTINGS, Context.MODE_PRIVATE);
+        mPlace = mSharedPreferences.getString(SettingsActivity.FORECAST_PLACE_SETTING, null);
 
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("http")

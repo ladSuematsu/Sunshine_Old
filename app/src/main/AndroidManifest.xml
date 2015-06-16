@@ -18,10 +18,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="ladsoft.sunshine.activity.AboutActivity"
+        <activity android:name="ladsoft.sunshine.activity.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName="ladsoft.sunshine.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ladsoft.sunshine.activity.MainActivity" />
+        </activity>
+        <activity android:name="ladsoft.sunshine.activity.AboutActivity"
             android:label="@string/title_activity_activity_about"
-            android:parentActivityName="ladsoft.sunshine.activity.AboutActivity">
+            android:parentActivityName="ladsoft.sunshine.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ladsoft.sunshine.activity.MainActivity" />
+
         </activity>
     </application>
 

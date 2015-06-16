@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import ladsoft.sunshine.R;
 //import ladsoft.asynctest.adapter.SectionsPagerAdapter;
@@ -43,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
 //    private ViewPager mViewPager;
     private Context mContext;
 
-    public static final String FORECAST_PREFERENCES = String.valueOf(R.string.forecast_preferences);
-
     private Toolbar mToolbar;
     private ActionBar mActionBar;
     private DrawerLayout mDrawerLayout;
@@ -59,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mForecastPreferences = this.getSharedPreferences(FORECAST_PREFERENCES, MODE_PRIVATE);
+        mForecastPreferences = this.getSharedPreferences(SettingsActivity.FORECAST_SETTINGS, MODE_PRIVATE);
 
         if(mForecastPreferences.getString("place", null) == null) {
             mForecastPreferences.edit()
-                    .putString("place", "94043")
+                    .putString(SettingsActivity.FORECAST_PLACE_SETTING, "94043")
                     .commit();
         }
 
@@ -97,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 int id = menuItem.getItemId();
                 boolean itemSelected = true;
+                Intent intent;
 
                 switch(id) {
                     case R.id.navigation_item_1:
@@ -112,7 +110,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.navigation_item_3:
-                        Intent intent = new Intent(mContext, AboutActivity.class);
+                        intent = new Intent(mContext, SettingsActivity.class);
+                        startActivity(intent);
+                        break;
+
+                    case R.id.navigation_item_4:
+                        intent = new Intent(mContext, AboutActivity.class);
                         startActivity(intent);
                     break;
 
