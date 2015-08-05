@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,9 +14,10 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import ladsoft.sunshine.R;
-//import ladsoft.asynctest.adapter.SectionsPagerAdapter;
 import ladsoft.sunshine.fragment.CurrentForecastFragment;
 import ladsoft.sunshine.fragment.WeeklyForecastFragment;
+
+//import ladsoft.asynctest.adapter.SectionsPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext;
 
     private Toolbar mToolbar;
-    private ActionBar mActionBar;
+    private android.support.v7.app.ActionBar mActionBar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationDrawer;
     private FrameLayout mFrameLayout;
-    private FragmentManager fragmentManager;
+    private android.support.v4.app.FragmentManager fragmentManager;
 
     private SharedPreferences mForecastPreferences;
 

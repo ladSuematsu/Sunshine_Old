@@ -5,4 +5,6 @@
     <color name="colorPrimaryDark">#001964</color>
     <color name="colorAccent">#004bff</color>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>
