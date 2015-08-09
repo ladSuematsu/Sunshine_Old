@@ -1,14 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="#0099cc"
-    tools:context="ladsoft.sunshine.activity.SplashScreenActivity">
+    tools:context="ladsoft.sunshine.activity.SplashScreenActivity"
+    android:keepScreenOn="true">
 
 
-    <TextView android:id="@+id/fullscreen_content" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:keepScreenOn="true" android:textColor="#33b5e5"
-        android:textStyle="bold" android:textSize="50sp" android:gravity="center"
-        android:text="@string/splash_screen_title"
-        android:textAllCaps="true" />
+    <TextView android:id="@+id/splashscreen_title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="#ffffff"
+        android:textStyle="bold" android:textSize="50sp"
+        android:text="@string/splashscreen_title"
+        android:textAllCaps="true"
+        android:layout_centerInParent="true"/>
+
+    <TextView android:id="@+id/splashscreen_subtitle"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="#ffffff"
+        android:textStyle="normal"
+        android:textSize="15sp"
+        android:text="@string/splashscreen_subtitle"
+        android:layout_centerInParent="true"
+        android:textAllCaps="true"
+        android:layout_below="@+id/splashscreen_title" />
 
 
-</FrameLayout>
+</RelativeLayout>
